@@ -1,9 +1,10 @@
 import React from 'react';
 import './App.css';
 import { Route } from 'react-router-dom';
-import Landing from '../Landing/Landing'
-import config from '../../config'
-import DummydogContext from '../../context/dummydog-context'
+import Landing from '../Landing/Landing';
+import Resource from '../Resource/Resource';
+import config from '../../config';
+import DummydogContext from '../../context/dummydog-context';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -35,6 +36,12 @@ export default class App extends React.Component {
               exact
               path='/'
               component={Landing}>
+            </Route>
+
+            <Route
+              exact
+              path='/resource'
+              component={Resource}>
             </Route>
 
         </div>
