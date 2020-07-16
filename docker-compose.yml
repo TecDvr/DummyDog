@@ -11,8 +11,7 @@ services:
     security_opt:
       - seccomp:unconfined
     ports:
-      - '3306:3306'
-    expose: ["3306"]
+      - '3316:3306'
     volumes:
       - ./backend:/docker-entrypoint-initdb.d/:ro
     networks:
