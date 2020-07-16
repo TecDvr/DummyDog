@@ -2,6 +2,8 @@ import React from 'react';
 import './App.css';
 import { Route } from 'react-router-dom';
 import Landing from '../Landing/Landing'
+import config from '../../config'
+import DummydogContext from '../../context/dummydog-context'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -11,17 +13,32 @@ export default class App extends React.Component {
     }
   }
 
+  componentDidMount() {
+    fetch(`${config.API_ENDPOINT}`, {
+      method: 'GET'
+    })
+    .then(res => res.json())
+    .then(resJSON => {
+      console.log(resJSON)
+      // this.setState({
+      //   test: resJSON
+      // })
+    })
+  }
+
   render() {
     return (
-      <div className='app-container'>
+      <DummydogContext.Provider value={this.state}>
+        <div className='app-container'>
      
-          <Route
-            exact
-            path='/'
-            component={Landing}>
-          </Route>
+            <Route
+              exact
+              path='/'
+              component={Landing}>
+            </Route>
 
-      </div>
+        </div>
+      </DummydogContext.Provider>
     )
   }
 }
