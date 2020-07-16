@@ -1,4 +1,5 @@
 .app-container {
+    color: rgb(36, 4, 126);
     height: 100vh;
     width: 100vw;
     display: flex;
