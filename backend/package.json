@@ -1,0 +1,30 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "tsc",
+    "watch:build": "tsc --watch",
+    "watch:server": "nodemon './dist/server.js' --watch './dist'",
+    "start": "npm-run-all clean build --parallel watch:build watch:server --print-label"
+  },
+  "author": "Tony Saavedra",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^14.0.23",
+    "eslint": "^7.4.0",
+    "eslint-plugin-import": "^2.22.0",
+    "nodemon": "^2.0.4",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  }
+}
