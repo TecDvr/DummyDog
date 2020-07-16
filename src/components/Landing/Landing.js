@@ -57,7 +57,6 @@ export default class Landing extends React.Component {
                         id='apikey'
                         onChange={e => this.setState({ api: e.target.value })}>
                     </input>
-
                     <label className='source-input-label' htmlFor='source'>Log Source</label>
                     <input
                         className='source-input'
@@ -72,7 +71,6 @@ export default class Landing extends React.Component {
                             this.setState({ logBody })
                         }}>
                     </input>
-
                     <label className='tag-input-label' htmlFor='tag'>Log Tag</label>
                     <input
                         className='tag-input'
@@ -87,7 +85,6 @@ export default class Landing extends React.Component {
                             this.setState({ logBody })
                         }}>
                     </input>
-
                     <label className='hostname-input-label' htmlFor='hostname'>Log Hostname</label>
                     <input
                         className='hostname-input'
@@ -102,7 +99,6 @@ export default class Landing extends React.Component {
                             this.setState({ logBody })
                         }}>
                     </input>
-
                     <label className='message-input-label' htmlFor='message'>Log Message</label>
                     <input
                         className='message-input'
@@ -117,7 +113,6 @@ export default class Landing extends React.Component {
                             this.setState({ logBody })
                         }}>
                     </input>
-
                     <button onClick={this.handleLogSend}></button>
                 </form>
             </div>

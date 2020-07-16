@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { Route } from 'react-router-dom';
 import Landing from '../Landing/Landing';
+import RealLanding from '../RealLanding/RealLanding';
 import Resource from '../Resource/Resource';
 import config from '../../config';
 import DummydogContext from '../../context/dummydog-context';
@@ -31,10 +32,16 @@ export default class App extends React.Component {
     return (
       <DummydogContext.Provider value={this.state}>
         <div className='app-container'>
-     
+
             <Route
               exact
               path='/'
+              component={RealLanding}>
+            </Route>
+
+            <Route
+              exact
+              path='/landing'
               component={Landing}>
             </Route>
 
