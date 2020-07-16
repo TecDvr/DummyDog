@@ -20,9 +20,9 @@ export default class App extends React.Component {
     .then(res => res.json())
     .then(resJSON => {
       console.log(resJSON)
-      // this.setState({
-      //   test: resJSON
-      // })
+      this.setState({
+        test: resJSON
+      })
     })
   }
 
