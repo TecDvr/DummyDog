@@ -4,7 +4,6 @@ import DummydogContext from '../../context/dummydog-context'
 import config from '../../config';
 import Select from 'react-select'
 import './Landing.css'
-import { Link } from 'react-router-dom';
 
 export default class Landing extends React.Component {
     static contextType = DummydogContext;
@@ -75,26 +74,32 @@ export default class Landing extends React.Component {
 
     //saves logs to DB
     saveFormat(e) {
-        // add delete path for when putton is clicked again
         console.log('Format Saved!')
-        e.preventDefault();
-        // fetch(`${config.SAVED_ENDPOINT}`, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'DD-API-KEY': `${this.state.api}`,
+        // e.preventDefault();
+        // this.setState({ saved: !this.state.saved })
+        // if (this.state.saved === false) {
+        //     fetch(`${config.SAVED_ENDPOINT}`, {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json'
         //     },
         //     body: JSON.stringify(this.state.logBody)
-        // })
-        // .then(res =>
-        //     (res.ok) 
-        //         ? res.json().then(allGood => {
-        //         console.log(allGood)
-        //         this.setState({ allGood: true })
         //     })
-        //     : res.json().then(resJson=>this.setState({error:resJson.error}))
-        // )
-        this.setState({ saved: !this.state.saved })
+        //     .then(res =>
+        //         (res.ok) 
+        //             ? res.json().then(allGood => {
+        //             console.log(allGood)
+        //             this.setState({ allGood: true })
+        //         })
+        //         : res.json().then(resJson=>this.setState({error:resJson.error}))
+        //     )
+        // } else {
+        //     fetch(`${config.DELETE_ENDPOINT}`, {
+        //         method: 'DELETE',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //     }})
+        // }
     }
 
     render() {
