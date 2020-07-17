@@ -14,10 +14,18 @@ export default withRouter(class RealLanding extends React.Component {
         return (
             <div>
                 <header className='title'>
-                    <h1>dummydog</h1>
+                    <h1><i className="fas fa-dumpster-fire"></i> Dummydog</h1>
                     <p>info sent the right way</p>
                 </header>
-                <Select onChange={(option) => this.props.history.push(option.value)} 
+                <div className='title-button-cluster'>
+                    <Link
+                        style={{ textDecoration: 'none' }}
+                        to='/landing'><button>Logs</button>
+                    </Link>
+                    <button>Metrics</button>
+                    <button>Events</button>
+                </div>
+                {/* <Select onChange={(option) => this.props.history.push(option.value)} 
                     defaultValue={{label: "Create New"}}
                     options={[
                         { label: "Logs", value: "landing" },
@@ -36,7 +44,7 @@ export default withRouter(class RealLanding extends React.Component {
                         control: (provided) => ({ ...provided, backgroundColor: "#0052B2"}),
                         singleValue: (provided) => ({...provided, color: "white"})
                     }}
-                />
+                /> */}
             </div>
         )
     }

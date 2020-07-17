@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-.landing-container{
-    width: 60vw;
-    max-width: 700px;
-=======
 .landing-container {
     height: 100vh;
     width: 100vw;
@@ -10,6 +5,16 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.title {
+    text-align: center;
+}
+
+.log-selector {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 10px 10px 10px;
 }
 
 form {
@@ -44,5 +49,11 @@ button {
     border-radius: 10px;
     background: rgba(255, 255, 255, .2);
     margin: 10px;
->>>>>>> 7fc7e6dc76facaf83485e022a3e5f95d2f819175
+    cursor: pointer;
+}
+
+.div-button {
+    height: 10px;
+    width: 10px;
+    background: white;
 }
