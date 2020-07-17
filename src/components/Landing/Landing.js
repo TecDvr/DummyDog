@@ -10,17 +10,21 @@ export default class Landing extends React.Component {
         this.state = {
             api: null,
             error: null,
-            lang: 0
-,            logBody: {
+            templates: [],
+            logBody: {
                 ddsource: 'testsource',
                 ddtags: 'env:staging',
                 hostname: 'mothership',
+                idx: 0,
                 message: '2019-11-19T14:37:58,995 INFO [process.name][20081] Hello World'
             }
         }
         this.handleLogSend = this.handleLogSend.bind(this);
     }
 
+    componentDidMount(){
+        this.handleLogPull()
+    }
     handleLogSend(e) {
         console.log(this.context.template[0].idx);
         e.preventDefault();
@@ -36,6 +40,43 @@ export default class Landing extends React.Component {
             (res.ok) 
                 ? res.json().then(allGood => {
                 console.log(allGood)
+            })
+            : res.json().then(resJson=>this.setState({error:resJson.error}))
+        )  
+    }
+
+    handleLogSave(e) {
+        console.log("save");
+        e.preventDefault();
+        fetch(`${config.TEMPLATE_ENDPOINT}`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.state.logBody)
+        })
+        .then(res =>
+            (res.ok) 
+                ? res.json().then(data => {
+                console.log(data)
+            })
+            : res.json().then(resJson=>this.setState({error:resJson.error}))
+        )  
+    }
+
+    handleLogPull(e) {
+        fetch(`${config.TEMPLATE_ENDPOINT}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(res =>
+            (res.ok) 
+                ? res.json().then(data => {
+                console.log(data);
+                this.setState({templates:data})
             })
             : res.json().then(resJson=>this.setState({error:resJson.error}))
         )  
@@ -128,6 +169,7 @@ export default class Landing extends React.Component {
                         }}>
                     </input>
                     <button onClick={this.handleLogSend}></button>
+                    <button onClick={this.handleLogSave}></button>
                 </form>
             </div>
         )

@@ -17,6 +17,13 @@ router.get('/templates', (req, res) => {
     });
 });
 
+router.post('/templates', (req, res) => {
+    connection.query("INSERT INTO list_items SET ?", (error, results) => {
+        handleError(error, res);
+        res.end(JSON.stringify(results));
+    });
+});
+
 const handleError = (error, res) => {
     if (error) {
         res.status(400).send("Could not query DB");
