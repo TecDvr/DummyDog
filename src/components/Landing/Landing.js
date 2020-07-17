@@ -11,7 +11,7 @@ export default class Landing extends React.Component {
         this.state = {
             api: null,
             error: null,
-            lang: 0,
+            lang: 12,
             template: [],
             logBody: {
                 ddsource: '',
@@ -74,7 +74,7 @@ export default class Landing extends React.Component {
             return (
                 <div className='landing-container'>
                     <div className='title'>
-                        <h1><i className="fas fa-shipping-fast"></i> Send Some Logs Bruh</h1>
+                        <h1><i className="fas fa-shipping-fast"></i> Send Some Logs</h1>
                     </div>
                     <Select 
                         onChange={(option) => {
@@ -82,7 +82,7 @@ export default class Landing extends React.Component {
                         }}
                         defaultValue={{label: "Custom Log?"}}
                         options={[
-                            { label: "Custom", value: '' },
+                            { label: "Custom", value: 12 },
                             { label: "csharp", value: 0 },
                             { label: "docker", value: 1 },
                             { label: "iis", value: 2 },
@@ -114,7 +114,7 @@ export default class Landing extends React.Component {
                         </input>
                         <label className='source-input-label' htmlFor='source'>Log Source <i className="fas fa-map-pin"></i></label>
                         <input
-                            value={this.state.template[this.state.lang].ddsource}
+                            defaultValue={this.state.template[this.state.lang].ddsource}
                             className='source-input'
                             required
                             placeholder='testsource'
@@ -129,10 +129,10 @@ export default class Landing extends React.Component {
                         </input>
                         <label className='tag-input-label' htmlFor='tag'>Log Tag <i className="fas fa-tag"></i></label>
                         <input
-                            value={this.state.template[this.state.lang].ddtags}
+                            defaultValue={this.state.template[this.state.lang].ddtags}
                             className='tag-input'
                             required
-                            placeholder='env:staging'
+                            placeholder='key:value'
                             type='text'
                             name='tag'
                             id='tag'
@@ -144,7 +144,7 @@ export default class Landing extends React.Component {
                         </input>
                         <label className='hostname-input-label' htmlFor='hostname'>Log Hostname <i className="fas fa-file-signature"></i></label>
                         <input
-                            value={this.state.template[this.state.lang].hostname}
+                            defaultValue={this.state.template[this.state.lang].hostname}
                             className='hostname-input'
                             required
                             placeholder='i-012345678'
@@ -159,7 +159,7 @@ export default class Landing extends React.Component {
                         </input>
                         <label className='message-input-label' htmlFor='message'>Log Message <i className="fas fa-envelope-open-text"></i></label>
                         <textarea
-                            value={this.state.template[this.state.lang].message}
+                            defaultValue={this.state.template[this.state.lang].message}
                             className='message-input'
                             required
                             placeholder='2019-11-19T14:37:58,995 INFO [process.name][20081] Hello World'
