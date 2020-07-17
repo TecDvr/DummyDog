@@ -2,6 +2,7 @@ import React from 'react';
 import DummydogContext from '../../context/dummydog-context'
 import config from '../../config';
 import Select from 'react-select'
+import './Landing.css'
 
 export default class Landing extends React.Component {
     static contextType = DummydogContext;
@@ -53,21 +54,32 @@ export default class Landing extends React.Component {
         )  
     }
 
+    testMethod() {
+        let logBody = {...this.state.logBody}
+        logBody.hostname = this.state.template[this.state.lang].hostname;
+        logBody.ddsource = this.state.template[this.state.lang].ddsource;
+        logBody.ddtags = this.state.template[this.state.lang].ddtags;
+        logBody.message = this.state.template[this.state.lang].message;
+        this.setState({ logBody })
+    }
+
     render() {
         if (this.state.template.length <= 0) {
             return (
                 <div>
-                    <p>loading</p>
+                    <p className='loading-screen'>loading</p>
                 </div>
             )
         } else {
             return (
                 <div className='landing-container'>
                     <div className='title'>
-                        <h1>Logs</h1>
-                        <p>send logs</p>
+                        <h1><i className="fas fa-shipping-fast"></i> Send Some Logs Bruh</h1>
                     </div>
-                    <Select onChange={(option) => this.setState({ lang: option.value })}
+                    <Select 
+                        onChange={(option) => {
+                            this.setState({ lang: option.value }, () => this.testMethod())
+                        }}
                         defaultValue={{label: "Custom Log?"}}
                         options={[
                             { label: "Custom", value: '' },
@@ -85,12 +97,12 @@ export default class Landing extends React.Component {
                             { label: "zookeeper", value: 11 }
                         ]}
                         styles={{ 
-                            control: (provided) => ({ ...provided, backgroundColor: "#3C00B2"}),
+                            control: (provided) => ({ ...provided, backgroundColor: "#3C00B2", width: '200px', borderRadius: '10px'}),
                             singleValue: (provided) => ({...provided, color: "white"})
                         }}
                     />
                     <form className='api'>
-                        <label className='api-input-label' htmlFor='apikey'>Your API Key</label>
+                        <label className='api-input-label' htmlFor='apikey'>Your API Key <i className="fas fa-key"></i></label>
                         <input
                             className='api-input'
                             required
@@ -100,7 +112,7 @@ export default class Landing extends React.Component {
                             id='apikey'
                             onChange={e => this.setState({ api: e.target.value })}>
                         </input>
-                        <label className='source-input-label' htmlFor='source'>Log Source</label>
+                        <label className='source-input-label' htmlFor='source'>Log Source <i className="fas fa-map-pin"></i></label>
                         <input
                             value={this.state.template[this.state.lang].ddsource}
                             className='source-input'
@@ -115,7 +127,7 @@ export default class Landing extends React.Component {
                                 this.setState({ logBody })
                             }}>
                         </input>
-                        <label className='tag-input-label' htmlFor='tag'>Log Tag</label>
+                        <label className='tag-input-label' htmlFor='tag'>Log Tag <i className="fas fa-tag"></i></label>
                         <input
                             value={this.state.template[this.state.lang].ddtags}
                             className='tag-input'
@@ -130,7 +142,7 @@ export default class Landing extends React.Component {
                                 this.setState({ logBody })
                             }}>
                         </input>
-                        <label className='hostname-input-label' htmlFor='hostname'>Log Hostname</label>
+                        <label className='hostname-input-label' htmlFor='hostname'>Log Hostname <i className="fas fa-file-signature"></i></label>
                         <input
                             value={this.state.template[this.state.lang].hostname}
                             className='hostname-input'
@@ -145,8 +157,8 @@ export default class Landing extends React.Component {
                                 this.setState({ logBody })
                             }}>
                         </input>
-                        <label className='message-input-label' htmlFor='message'>Log Message</label>
-                        <input
+                        <label className='message-input-label' htmlFor='message'>Log Message <i className="fas fa-envelope-open-text"></i></label>
+                        <textarea
                             value={this.state.template[this.state.lang].message}
                             className='message-input'
                             required
@@ -159,9 +171,9 @@ export default class Landing extends React.Component {
                                 logBody.message = e.target.value;
                                 this.setState({ logBody })
                             }}>
-                        </input>
-                        <button onClick={this.handleLogSend}></button>
+                        </textarea>
                     </form>
+                    <button onClick={this.handleLogSend}>Send Log</button>
                 </div>
             )
         }

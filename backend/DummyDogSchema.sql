@@ -55,7 +55,8 @@ VALUES
   ("redis", "", "server.redis.01", "12115:M 08 Jan 17:45:41.572 # Server started, Redis version 3.0.6"),
   ("ruby", "service:api", "i-274583170",'I, [1999-03-03T02:34:24.895701 #19074]  INFO -- : Started GET "/api/v1/example/query" for 123.123.123.123 at 1999-03-03 02:34:24+0000'),
   ("tomcat", "service:app", "vm-001-app", "2000-09-07 14:07:44 INFO org.foo.bar:32 - Entering application."),
-  ("zookeeper", "", "i-432156780", "2000-09-07 14:07:41,508 [main] INFO  MyApp - Entering application.");
+  ("zookeeper", "", "i-432156780", "2000-09-07 14:07:41,508 [main] INFO  MyApp - Entering application."),
+  ("", "", "", "");
 
 -- -----------------------------------------------------
 -- Table `mydb`.`GetLogsBodyData`
