@@ -1,6 +1,7 @@
 import React from 'react';
 import DummydogContext from '../../context/dummydog-context'
 import config from '../../config';
+import Select from 'react-select'
 
 export default class Landing extends React.Component {
     static contextType = DummydogContext;
@@ -9,7 +10,8 @@ export default class Landing extends React.Component {
         this.state = {
             api: null,
             error: null,
-            logBody: {
+            lang: 0
+,            logBody: {
                 ddsource: 'testsource',
                 ddtags: 'env:staging',
                 hostname: 'mothership',
@@ -20,7 +22,7 @@ export default class Landing extends React.Component {
     }
 
     handleLogSend(e) {
-        console.log('workin hard or hardly working?');
+        console.log(this.context.template[0].idx);
         e.preventDefault();
         fetch(`${config.LOGS_ENDPOINT}`, {
             method: 'POST',
@@ -43,9 +45,20 @@ export default class Landing extends React.Component {
         return (
             <div className='landing-container'>
                 <div className='title'>
-                    <h1>dummydog</h1>
-                    <p>info sent the right way</p>
+                    <h1>Logs</h1>
+                    <p>send logs</p>
                 </div>
+                <Select onChange={(option) => this.setState({ lang: option.value })}
+                    defaultValue={{label: "Custom Log?"}}
+                    options={[
+                        { label: "Custom", value: "Custom" },
+                        { label: "python", value: 7 },
+                    ]}
+                    styles={{ 
+                        control: (provided) => ({ ...provided, backgroundColor: "#3C00B2"}),
+                        singleValue: (provided) => ({...provided, color: "white"})
+                    }}
+                />
                 <form className='api'>
                     <label className='api-input-label' htmlFor='apikey'>Your API Key</label>
                     <input
@@ -59,6 +72,7 @@ export default class Landing extends React.Component {
                     </input>
                     <label className='source-input-label' htmlFor='source'>Log Source</label>
                     <input
+                        // value={this.context.template[0].idx}
                         className='source-input'
                         required
                         placeholder='source'

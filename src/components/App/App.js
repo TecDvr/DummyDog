@@ -11,19 +11,18 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      test: ''
+      template: []
     }
   }
 
   componentDidMount() {
-    fetch(`${config.API_ENDPOINT}`, {
+    fetch(`${config.TEMPLATE_ENDPOINT}`, {
       method: 'GET'
     })
     .then(res => res.json())
     .then(resJSON => {
-      console.log(resJSON)
       this.setState({
-        test: resJSON
+        template: resJSON
       })
     })
   }
