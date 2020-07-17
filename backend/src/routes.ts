@@ -18,7 +18,8 @@ router.get('/templates', (req, res) => {
 });
 
 router.post('/templates', (req, res) => {
-    connection.query("INSERT INTO list_items SET ?", (error, results) => {
+    var postData  = req.body;
+    connection.query("INSERT INTO LogsTemplateData", postData, (error, results) => {
         handleError(error, res);
         res.end(JSON.stringify(results));
     });
