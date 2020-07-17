@@ -20,7 +20,7 @@ export default withRouter(class RealLanding extends React.Component {
                 <Select onChange={(option) => this.props.history.push(option.value)} 
                     defaultValue={{label: "Create New"}}
                     options={[
-                        { label: "Logs", value: "logs" },
+                        { label: "Logs", value: "landing" },
                         { label: "Metrics", value: "metrics" },
                     ]}
                     styles={{ 
