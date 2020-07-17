@@ -1,4 +1,5 @@
 import React from 'react';
+import './Landing.css';
 import DummydogContext from '../../context/dummydog-context'
 import config from '../../config';
 import Select from 'react-select'
@@ -11,6 +12,7 @@ export default class Landing extends React.Component {
         this.state = {
             api: null,
             error: null,
+            lang: 0,
             lang: 12,
             template: [],
             allGood: false,
