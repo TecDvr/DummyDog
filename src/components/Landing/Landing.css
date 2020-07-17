@@ -7,6 +7,16 @@
     align-items: center;
 }
 
+.title {
+    text-align: center;
+}
+
+.log-selector {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 10px 10px 10px;
+}
+
 form {
     width: 80vw;
     display: flex;
@@ -39,4 +49,11 @@ button {
     border-radius: 10px;
     background: rgba(255, 255, 255, .2);
     margin: 10px;
+    cursor: pointer;
+}
+
+.div-button {
+    height: 10px;
+    width: 10px;
+    background: white;
 }

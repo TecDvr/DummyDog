@@ -13,6 +13,8 @@ export default class Landing extends React.Component {
             error: null,
             lang: 12,
             template: [],
+            allGood: false,
+            saved: false,
             logBody: {
                 ddsource: '',
                 ddtags: '',
@@ -21,8 +23,10 @@ export default class Landing extends React.Component {
             }
         }
         this.handleLogSend = this.handleLogSend.bind(this);
+        this.saveFormat = this.saveFormat.bind(this);
     }
 
+    //fetches log templates
     componentDidMount() {
         fetch(`${config.TEMPLATE_ENDPOINT}`, {
             method: 'GET'
@@ -35,6 +39,7 @@ export default class Landing extends React.Component {
         })
     }
 
+    //sends logs to Datadog Sandbox
     handleLogSend(e) {
         e.preventDefault();
         fetch(`${config.LOGS_ENDPOINT}`, {
@@ -49,11 +54,13 @@ export default class Landing extends React.Component {
             (res.ok) 
                 ? res.json().then(allGood => {
                 console.log(allGood)
+                this.setState({ allGood: true })
             })
             : res.json().then(resJson=>this.setState({error:resJson.error}))
         )  
     }
 
+    // sets state to selected log tenplate
     testMethod() {
         let logBody = {...this.state.logBody}
         logBody.hostname = this.state.template[this.state.lang].hostname;
@@ -61,6 +68,30 @@ export default class Landing extends React.Component {
         logBody.ddtags = this.state.template[this.state.lang].ddtags;
         logBody.message = this.state.template[this.state.lang].message;
         this.setState({ logBody })
+    }
+
+    //saves logs to DB
+    saveFormat(e) {
+        // add delete path for when putton is clicked again
+        console.log('Format Saved!')
+        e.preventDefault();
+        // fetch(`${config.SAVED_ENDPOINT}`, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'DD-API-KEY': `${this.state.api}`,
+        //     },
+        //     body: JSON.stringify(this.state.logBody)
+        // })
+        // .then(res =>
+        //     (res.ok) 
+        //         ? res.json().then(allGood => {
+        //         console.log(allGood)
+        //         this.setState({ allGood: true })
+        //     })
+        //     : res.json().then(resJson=>this.setState({error:resJson.error}))
+        // )
+        this.setState({ saved: !this.state.saved })
     }
 
     render() {
@@ -75,32 +106,50 @@ export default class Landing extends React.Component {
                 <div className='landing-container'>
                     <div className='title'>
                         <h1><i className="fas fa-shipping-fast"></i> Send Some Logs</h1>
+                        {this.state.allGood === false ? <p>Ready When You Are</p> : <p>Logs Sent!</p>}
                     </div>
-                    <Select 
-                        onChange={(option) => {
-                            this.setState({ lang: option.value }, () => this.testMethod())
-                        }}
-                        defaultValue={{label: "Custom Log?"}}
-                        options={[
-                            { label: "Custom", value: 12 },
-                            { label: "csharp", value: 0 },
-                            { label: "docker", value: 1 },
-                            { label: "iis", value: 2 },
-                            { label: "java", value: 3 },
-                            { label: "nginx", value: 4 },
-                            { label: "nodejs", value: 5 },
-                            { label: "php", value: 6 },
-                            { label: "python", value: 7 },
-                            { label: "redis", value: 8 },
-                            { label: "ruby", value: 9 },
-                            { label: "tomcat", value: 10 },
-                            { label: "zookeeper", value: 11 }
-                        ]}
-                        styles={{ 
-                            control: (provided) => ({ ...provided, backgroundColor: "#3C00B2", width: '200px', borderRadius: '10px'}),
-                            singleValue: (provided) => ({...provided, color: "white"})
-                        }}
-                    />
+                    <div className='log-selector'>
+                        <Select 
+                            onChange={(option) => {
+                                this.setState({ lang: option.value, allGood: false }, () => this.testMethod())
+                            }}
+                            defaultValue={{label: "Custom Log?"}}
+                            options={[
+                                { label: "Custom", value: 12 },
+                                { label: "csharp", value: 0 },
+                                { label: "docker", value: 1 },
+                                { label: "iis", value: 2 },
+                                { label: "java", value: 3 },
+                                { label: "nginx", value: 4 },
+                                { label: "nodejs", value: 5 },
+                                { label: "php", value: 6 },
+                                { label: "python", value: 7 },
+                                { label: "redis", value: 8 },
+                                { label: "ruby", value: 9 },
+                                { label: "tomcat", value: 10 },
+                                { label: "zookeeper", value: 11 }
+                            ]}
+                            styles={{ 
+                                control: (provided) => ({ ...provided, backgroundColor: "#3C00B2", width: '200px', borderRadius: '10px', cursor: 'pointer', margin: '10px'}),
+                                singleValue: (provided) => ({...provided, color: "white"}),
+                                menu: (provided) => ({...provided, backgroundColor: "#3C00B2", borderRadius: '10px'})
+                            }}
+                        />
+                        <Select 
+                            onChange={(option) => {
+                                // this.setState({ lang: option.value, allGood: false }, () => this.testMethod())
+                            }}
+                            defaultValue={{label: "Saved Logs"}}
+                            options={[
+                                { label: "Name", value: 1 },
+                            ]}
+                            styles={{ 
+                                control: (provided) => ({ ...provided, backgroundColor: "#0052B2", width: '200px', borderRadius: '10px', cursor: 'pointer', margin: '10px'}),
+                                singleValue: (provided) => ({...provided, color: "white"}),
+                                menu: (provided) => ({...provided, backgroundColor: "#3C00B2", borderRadius: '10px'})
+                            }}
+                        />
+                    </div>    
                     <form className='api'>
                         <label className='api-input-label' htmlFor='apikey'>Your API Key <i className="fas fa-key"></i></label>
                         <input
@@ -173,7 +222,10 @@ export default class Landing extends React.Component {
                             }}>
                         </textarea>
                     </form>
-                    <button onClick={this.handleLogSend}>Send Log</button>
+                    <div className='button-cluster'>
+                        <button onClick={this.handleLogSend}>Send Log</button>
+                        <button onClick={this.saveFormat}>{this.state.saved === false ? 'Save Format?' : 'Saved!'}</button>
+                    </div>
                 </div>
             )
         }
