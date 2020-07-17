@@ -4,6 +4,7 @@ import DummydogContext from '../../context/dummydog-context'
 import config from '../../config';
 import Select from 'react-select'
 import './Landing.css'
+import { Link } from 'react-router-dom';
 
 export default class Landing extends React.Component {
     static contextType = DummydogContext;
