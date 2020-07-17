@@ -25,6 +25,7 @@ router.post('/templates', (req, res) => {
     });
 });
 
+
 const handleError = (error, res) => {
     if (error) {
         res.status(400).send("Could not query DB");

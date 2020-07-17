@@ -1,4 +1,5 @@
 import React from 'react';
+import './Landing.css';
 import DummydogContext from '../../context/dummydog-context'
 import config from '../../config';
 import Select from 'react-select'
@@ -20,11 +21,30 @@ export default class Landing extends React.Component {
             }
         }
         this.handleLogSend = this.handleLogSend.bind(this);
+        this.handleLogSave = this.handleLogSave.bind(this);
     }
 
     componentDidMount(){
         this.handleLogPull()
     }
+
+    handleLogPull(e) {
+        fetch(`${config.TEMPLATE_ENDPOINT}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(res =>
+            (res.ok) 
+                ? res.json().then(data => {
+                console.log(data);
+                this.setState({templates:data})
+            })
+            : res.json().then(resJson=>this.setState({error:resJson.error}))
+        )  
+    }
+
     handleLogSend(e) {
         console.log(this.context.template[0].idx);
         e.preventDefault();
@@ -46,15 +66,15 @@ export default class Landing extends React.Component {
     }
 
     handleLogSave(e) {
-        console.log("save");
         e.preventDefault();
+        console.log('handleLogSave : ', this); 
         fetch(`${config.TEMPLATE_ENDPOINT}`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(this.state.logBody)
+            body: JSON.stringify(this.state.templates)
         })
         .then(res =>
             (res.ok) 
@@ -65,35 +85,38 @@ export default class Landing extends React.Component {
         )  
     }
 
-    handleLogPull(e) {
-        fetch(`${config.TEMPLATE_ENDPOINT}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        })
-        .then(res =>
-            (res.ok) 
-                ? res.json().then(data => {
-                console.log(data);
-                this.setState({templates:data})
-            })
-            : res.json().then(resJson=>this.setState({error:resJson.error}))
-        )  
-    }
-
     render() {
+        const {templates} = this.state;
         return (
             <div className='landing-container'>
                 <div className='title'>
                     <h1>Logs</h1>
                     <p>send logs</p>
                 </div>
+                {/* <Select onChange={(option) => this.setState({ lang: option.value })}
+                defaultValue={{label: "Custom Log?"}}
+                options={
+                    Object.keys(templates).map(e => ({ [e]: templates[e].ddsource }))
+                }
+                styles={{ 
+                    valueContainer: (provided) => ({...provided, color: "black"}),
+                    control: (provided) => ({ ...provided, backgroundColor: "#3C00B2"}),
+                    singleValue: (provided) => ({...provided, color: "white"})
+                }}
+                /> */}
                 <Select onChange={(option) => this.setState({ lang: option.value })}
                     defaultValue={{label: "Custom Log?"}}
                     options={[
                         { label: "Custom", value: "Custom" },
+                        { label: "docker", value: 1 },
+                        { label: "iis", value: 2 },
+                        { label: "java", value: 3 },
+                        { label: "nginx", value: 4 },
+                        { label: "nodejs", value: 5 },
+                        { label: "php", value: 6 },
                         { label: "python", value: 7 },
+                        { label: "redis", value: 8 },
+                        { label: "ruby", value: 9 },
                     ]}
                     styles={{ 
                         control: (provided) => ({ ...provided, backgroundColor: "#3C00B2"}),
