@@ -1,4 +1,48 @@
+<<<<<<< HEAD
 .landing-container{
     width: 60vw;
     max-width: 700px;
+=======
+.landing-container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+    height: 20px;
+    padding-left: 20px;
+}
+
+textarea {
+    margin: 10px;
+    max-width: 80vw;
+    height: 100px;
+    border: none;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+button {
+    color: white;
+    font-size: 20px;
+    height: 40px;
+    width: 150px;
+    border: solid white 1px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, .2);
+    margin: 10px;
+>>>>>>> 7fc7e6dc76facaf83485e022a3e5f95d2f819175
 }
