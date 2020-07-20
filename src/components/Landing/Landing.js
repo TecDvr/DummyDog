@@ -10,10 +10,11 @@ export default class Landing extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            loading: false,
             api: null,
             error: null,
             lang: 0,
-            lang: 12,
+            //lang: 12,
             template: [],
             allGood: false,
             saved: false,
@@ -43,6 +44,7 @@ export default class Landing extends React.Component {
 
     //sends logs to Datadog Sandbox
     handleLogSend(e) {
+        this.setState({ loading: true })
         e.preventDefault();
         fetch(`${config.LOGS_ENDPOINT}`, {
             method: 'POST',
@@ -57,6 +59,7 @@ export default class Landing extends React.Component {
                 ? res.json().then(allGood => {
                 console.log(allGood)
                 this.setState({ allGood: true })
+                this.setState({ loading: false })
             })
             : res.json().then(resJson=>this.setState({error:resJson.error}))
         )  
@@ -65,10 +68,19 @@ export default class Landing extends React.Component {
     // sets state to selected log tenplate
     testMethod() {
         let logBody = {...this.state.logBody}
-        logBody.hostname = this.state.template[this.state.lang].hostname;
-        logBody.ddsource = this.state.template[this.state.lang].ddsource;
-        logBody.ddtags = this.state.template[this.state.lang].ddtags;
-        logBody.message = this.state.template[this.state.lang].message;
+        if (this.state.lang == 12){
+            logBody.hostname = " "
+            logBody.ddsource = " "
+            logBody.ddtags = " "
+            logBody.message = " "
+        }
+        else {
+            logBody.hostname = this.state.template[this.state.lang].hostname;
+            logBody.ddsource = this.state.template[this.state.lang].ddsource;
+            logBody.ddtags = this.state.template[this.state.lang].ddtags;
+            logBody.message = this.state.template[this.state.lang].message;
+        }
+        
         this.setState({ logBody })
     }
 
@@ -103,6 +115,7 @@ export default class Landing extends React.Component {
     }
 
     render() {
+        let loading = this.state.loading;
         if (this.state.template.length <= 0) {
             return (
                 <div>
@@ -171,7 +184,7 @@ export default class Landing extends React.Component {
                         </input>
                         <label className='source-input-label' htmlFor='source'>Log Source <i className="fas fa-map-pin"></i></label>
                         <input
-                            defaultValue={this.state.template[this.state.lang].ddsource}
+                            value={this.state.logBody.ddsource}
                             className='source-input'
                             required
                             placeholder='testsource'
@@ -186,7 +199,7 @@ export default class Landing extends React.Component {
                         </input>
                         <label className='tag-input-label' htmlFor='tag'>Log Tag <i className="fas fa-tag"></i></label>
                         <input
-                            defaultValue={this.state.template[this.state.lang].ddtags}
+                            value={this.state.logBody.ddtags}
                             className='tag-input'
                             required
                             placeholder='key:value'
@@ -201,7 +214,7 @@ export default class Landing extends React.Component {
                         </input>
                         <label className='hostname-input-label' htmlFor='hostname'>Log Hostname <i className="fas fa-file-signature"></i></label>
                         <input
-                            defaultValue={this.state.template[this.state.lang].hostname}
+                            value={this.state.logBody.hostname}
                             className='hostname-input'
                             required
                             placeholder='i-012345678'
@@ -216,7 +229,7 @@ export default class Landing extends React.Component {
                         </input>
                         <label className='message-input-label' htmlFor='message'>Log Message <i className="fas fa-envelope-open-text"></i></label>
                         <textarea
-                            defaultValue={this.state.template[this.state.lang].message}
+                            value={this.state.logBody.message}
                             className='message-input'
                             required
                             placeholder='2019-11-19T14:37:58,995 INFO [process.name][20081] Hello World'
@@ -231,7 +244,7 @@ export default class Landing extends React.Component {
                         </textarea>
                     </form>
                     <div className='button-cluster'>
-                        <button onClick={this.handleLogSend}>Send Log</button>
+                        <button onClick={this.handleLogSend} disabled={loading}>{loading? <i className="fa fa-cog fa-spin"></i> : "send log"}</button>
                         <button onClick={this.saveFormat}>{this.state.saved === false ? 'Save Format?' : 'Saved!'}</button>
                     </div>
                 </div>
