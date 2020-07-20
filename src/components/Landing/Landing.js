@@ -18,6 +18,7 @@ export default class Landing extends React.Component {
             template: [],
             allGood: false,
             saved: false,
+            savedLogs: [],
             logBody: {
                 ddsource: '',
                 ddtags: '',
@@ -40,6 +41,13 @@ export default class Landing extends React.Component {
                 template: resJSON
             })
         })
+
+        //get savedLogs from local storage
+        if (JSON.parse(localStorage.getItem('localSavedLogs'))){
+            this.setState({
+                savedLogs: JSON.parse(localStorage.getItem('localSavedLogs'))
+            })
+        }
     }
 
     //sends logs to Datadog Sandbox
@@ -86,7 +94,20 @@ export default class Landing extends React.Component {
 
     //saves logs to DB
     saveFormat(e) {
-        console.log('Format Saved!')
+        //add to local storage while no DB
+        const localSavedLogs = JSON.parse(localStorage.getItem('localSavedLogs')) || [];
+
+        localSavedLogs.push(this.state.logBody);
+             
+        // Save back to localStorage
+        localStorage.setItem('localSavedLogs', JSON.stringify(localSavedLogs));
+        
+        //update state
+        
+        this.setState({savedLogs: localSavedLogs})
+        //localStorage.clear()
+       
+
         // e.preventDefault();
         // this.setState({ saved: !this.state.saved })
         // if (this.state.saved === false) {
@@ -116,6 +137,7 @@ export default class Landing extends React.Component {
 
     render() {
         let loading = this.state.loading;
+        let savedLogs = this.state.savedLogs;
         if (this.state.template.length <= 0) {
             return (
                 <div>
@@ -159,6 +181,7 @@ export default class Landing extends React.Component {
                         <Select 
                             onChange={(option) => {
                                 // this.setState({ lang: option.value, allGood: false }, () => this.testMethod())
+                                console.log(savedLogs)
                             }}
                             defaultValue={{label: "Saved Logs"}}
                             options={[
