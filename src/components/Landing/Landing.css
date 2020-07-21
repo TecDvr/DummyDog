@@ -57,3 +57,31 @@ button {
     width: 10px;
     background: white;
 }
+
+.save-modal {
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    padding: 2em;
+    background: #2356D7;
+    background: -webkit-linear-gradient(top left, #2356D7, #B60CC3);
+    background: -moz-linear-gradient(top left, #2356D7, #B60CC3);
+    background: linear-gradient(to bottom right, #2356D7, #B60CC3);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: solid white 1px;
+    border-radius: 10px;
+    height: 20vh;
+    width: 60vh;
+}
+
+.save-modal form {
+    width: auto;
+}
+
+.save-button-cluster {
+    margin-top: 5vh;
+    justify-content: center;
+    display: flex;
+}
