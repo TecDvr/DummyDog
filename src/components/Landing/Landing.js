@@ -18,6 +18,7 @@ export default class Landing extends React.Component {
             lang: 0,
             //lang: 12,
             template: [],
+            logName: null,
             allGood: false,
             saved: false,
             savedLogs: [],
@@ -107,18 +108,27 @@ export default class Landing extends React.Component {
     saveFormat(e) {
         //add to local storage while no DB
         const localSavedLogs = JSON.parse(localStorage.getItem('localSavedLogs')) || [];
+        const name = this.state.logName
+        const data = this.state.logBody
+        //handle no input
+        if (!name){
+          console.log('please enter a name')
+        }
+        //handle name allready exisist
 
-        localSavedLogs.push(this.state.logBody);
-             
+        const saveData = {[name]: data}
+
         // Save back to localStorage
         localStorage.setItem('localSavedLogs', JSON.stringify(localSavedLogs));
         
         //update state
         
         this.setState({savedLogs: localSavedLogs})
+        //uncomment below to clear storage for testing
         //localStorage.clear()
        
-
+        //the below is if we have a db, we don't need one...
+        
         // e.preventDefault();
         // this.setState({ saved: !this.state.saved })
         // if (this.state.saved === false) {
@@ -334,9 +344,7 @@ export default class Landing extends React.Component {
                    type="text"
                    name="savelogname"
                    id="savelogname"
-                   onChange={(e) => {
-                     console.log("test")
-                   }}
+                   onChange={(e) => this.setState({ logName: e.target.value })}
                   ></input>
                 </form>
                 <div className="save-button-cluster">
