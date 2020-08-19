@@ -6,6 +6,9 @@ import config from '../../config';
 import Select from 'react-select'
 import './Landing.css'
 
+// Remove data
+// localStorage.removeItem('myDatakey');
+
 export default class Landing extends React.Component {
     static contextType = DummydogContext;
     constructor(props) {
@@ -18,10 +21,11 @@ export default class Landing extends React.Component {
             lang: 0,
             //lang: 12,
             template: [],
-            logName: null,
+            logName: '',
             allGood: false,
             saved: false,
             savedLogs: [],
+            savedLogName: '',
             logBody: {
                 ddsource: '',
                 ddtags: '',
@@ -46,14 +50,7 @@ export default class Landing extends React.Component {
             this.setState({
                 template: resJSON
             })
-        })
-
-        //get savedLogs from local storage
-        if (JSON.parse(localStorage.getItem('localSavedLogs'))){
-            this.setState({
-                savedLogs: JSON.parse(localStorage.getItem('localSavedLogs'))
-            })
-        }
+        })  
     }
     handleOpenModal () {
         this.setState({ showModal: true });
@@ -62,7 +59,7 @@ export default class Landing extends React.Component {
     handleCloseModal () {
         this.setState({ showModal: false });
     }
-    //sends logs to Datadog Sandbox
+
     handleLogSend(e) {
         this.setState({ loading: true })
         e.preventDefault();
@@ -104,61 +101,33 @@ export default class Landing extends React.Component {
         this.setState({ logBody })
     }
 
-    //saves logs to DB
     saveFormat(e) {
-        //add to local storage while no DB
-        const localSavedLogs = JSON.parse(localStorage.getItem('localSavedLogs')) || [];
         const name = this.state.logName
         const data = this.state.logBody
-        //handle no input
+
         if (!name){
           console.log('please enter a name')
+          // need to fix not null in case of duplicate name
+        } else if (localStorage.getItem(name) == !null) {
+          console.log('this name is already in use')
+        } else {
+          localStorage.setItem(name, JSON.stringify(data));
+          this.handleCloseModal();
+          this.setState({ logName: '' });
         }
-        //handle name allready exisist
-
-        const saveData = {[name]: data}
-
-        // Save back to localStorage
-        localStorage.setItem('localSavedLogs', JSON.stringify(localSavedLogs));
-        
-        //update state
-        
-        this.setState({savedLogs: localSavedLogs})
-        //uncomment below to clear storage for testing
-        //localStorage.clear()
-       
-        //the below is if we have a db, we don't need one...
-        
-        // e.preventDefault();
-        // this.setState({ saved: !this.state.saved })
-        // if (this.state.saved === false) {
-        //     fetch(`${config.SAVED_ENDPOINT}`, {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(this.state.logBody)
-        //     })
-        //     .then(res =>
-        //         (res.ok) 
-        //             ? res.json().then(allGood => {
-        //             console.log(allGood)
-        //             this.setState({ allGood: true })
-        //         })
-        //         : res.json().then(resJson=>this.setState({error:resJson.error}))
-        //     )
-        // } else {
-        //     fetch(`${config.DELETE_ENDPOINT}`, {
-        //         method: 'DELETE',
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //     }})
-        // }
     }
 
     render() {
         let loading = this.state.loading;
         let savedLogs = this.state.savedLogs;
+        let optionTest = Object.keys(localStorage).map(key => {
+          let container = {}
+          container.label = key;
+          container.value = key;
+
+          return container;
+        })
+
         if (this.state.template.length <= 0) {
             return (
                 <div>
@@ -224,11 +193,12 @@ export default class Landing extends React.Component {
                   />
                   <Select
                     onChange={(option) => {
-                      // this.setState({ lang: option.value, allGood: false }, () => this.testMethod())
-                      console.log(savedLogs);
+                      this.setState({
+                        logBody: JSON.parse(localStorage.getItem(option.value))
+                      })
                     }}
                     defaultValue={{ label: "Saved Logs" }}
-                    options={[{ label: "Name", value: 1 }]}
+                    options = {optionTest}
                     styles={{
                       control: (provided) => ({
                         ...provided,
@@ -352,6 +322,7 @@ export default class Landing extends React.Component {
                   <button onClick={this.saveFormat} type="button">{this.state.saved === false ? 'Save' : 'Saved!'}</button>
                 </div>
                 </ReactModal>
+
                 <div className="button-cluster">
                   <button onClick={this.handleLogSend} disabled={loading}>
                     {loading ? (
