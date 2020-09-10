@@ -12,6 +12,7 @@ export default class Landing extends React.Component {
         super(props);
         this.state = {
             showModal: false,
+            showDeleteModal: false,
             loading: false,
             api: null,
             error: null,
@@ -32,6 +33,8 @@ export default class Landing extends React.Component {
         }
         this.handleOpenModal = this.handleOpenModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
+        this.handleOpenDeleteModal = this.handleOpenDeleteModal.bind(this);
+        this.handleCloseDeleteModal = this.handleCloseDeleteModal.bind(this);
         this.handleLogSend = this.handleLogSend.bind(this);
         this.saveFormat = this.saveFormat.bind(this);
         this.removeLog = this.removeLog.bind(this);
@@ -50,12 +53,21 @@ export default class Landing extends React.Component {
             })
         })  
     }
+
     handleOpenModal () {
         this.setState({ showModal: true });
     }
       
     handleCloseModal () {
         this.setState({ showModal: false });
+    }
+
+    handleOpenDeleteModal () {
+      this.setState({ showDeleteModal: true });
+    }
+    
+    handleCloseDeleteModal () {
+      this.setState({ showDeleteModal: false });
     }
 
     handleLogSend(e) {
@@ -124,7 +136,8 @@ export default class Landing extends React.Component {
           ddtags: '',
           hostname: '',
           message: ''
-      } 
+      },
+      showDeleteModal: false 
       });
     }
 
@@ -333,6 +346,13 @@ export default class Landing extends React.Component {
                   <button onClick={this.saveFormat} type="button">{this.state.saved === false ? 'Save' : 'Saved!'}</button>
                 </div>
                 </ReactModal>
+                <ReactModal className="save-modal" isOpen={this.state.showDeleteModal}>
+                <p>Are you sure you want to delete?</p>
+                <div className="save-button-cluster">
+                  <button onClick={this.handleCloseDeleteModal}>Cancel</button>
+                  <button onClick={this.removeLog} type="button">Delete</button>
+                </div>
+                </ReactModal>
                 <div className="button-cluster">
                   <button onClick={this.handleLogSend} disabled={loading}>
                     {loading ? (
@@ -342,7 +362,7 @@ export default class Landing extends React.Component {
                     )}
                   </button>
                   <button onClick={this.handleOpenModal}>save format</button>
-                  <button onClick={this.removeLog}>delete log</button>
+                  <button onClick={this.handleOpenDeleteModal}>delete log</button>
                   <Link
                     style={{ textDecoration: 'none' }}
                     to='/'><button>home</button>
