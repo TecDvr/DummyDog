@@ -6,9 +6,6 @@ import config from '../../config';
 import Select from 'react-select'
 import './Log.css'
 
-// Remove data
-// localStorage.removeItem('myDatakey');
-
 export default class Landing extends React.Component {
     static contextType = DummydogContext;
     constructor(props) {
@@ -37,6 +34,7 @@ export default class Landing extends React.Component {
         this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleLogSend = this.handleLogSend.bind(this);
         this.saveFormat = this.saveFormat.bind(this);
+        this.removeLog = this.removeLog.bind(this);
     }
     
     componentDidMount() {
@@ -117,9 +115,21 @@ export default class Landing extends React.Component {
         }
     }
 
+    removeLog() {
+      localStorage.removeItem(this.state.logName);
+      this.setState({ 
+        logName: '',
+        logBody: {
+          ddsource: '',
+          ddtags: '',
+          hostname: '',
+          message: ''
+      } 
+      });
+    }
+
     render() {
         let loading = this.state.loading;
-        let savedLogs = this.state.savedLogs;
         let optionTest = Object.keys(localStorage).map(key => {
           let container = {}
           container.label = key;
@@ -194,7 +204,8 @@ export default class Landing extends React.Component {
                   <Select
                     onChange={(option) => {
                       this.setState({
-                        logBody: JSON.parse(localStorage.getItem(option.value))
+                        logBody: JSON.parse(localStorage.getItem(option.value)),
+                        logName: option.label
                       })
                     }}
                     defaultValue={{ label: "Saved Logs" }}
@@ -322,7 +333,6 @@ export default class Landing extends React.Component {
                   <button onClick={this.saveFormat} type="button">{this.state.saved === false ? 'Save' : 'Saved!'}</button>
                 </div>
                 </ReactModal>
-
                 <div className="button-cluster">
                   <button onClick={this.handleLogSend} disabled={loading}>
                     {loading ? (
@@ -332,6 +342,7 @@ export default class Landing extends React.Component {
                     )}
                   </button>
                   <button onClick={this.handleOpenModal}>save format</button>
+                  <button onClick={this.removeLog}>delete log</button>
                   <Link
                     style={{ textDecoration: 'none' }}
                     to='/'><button>home</button>
