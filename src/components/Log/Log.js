@@ -17,11 +17,11 @@ export default class Landing extends React.Component {
             api: null,
             error: null,
             lang: 0,
-            //lang: 12,
             template: [],
             logName: '',
             allGood: false,
             saved: false,
+            selectValue: {label: 'Saved Logs'},
             savedLogs: [],
             savedLogName: '',
             logBody: {
@@ -92,7 +92,6 @@ export default class Landing extends React.Component {
         )  
     }
 
-    // sets state to selected log tenplate
     testMethod() {
         let logBody = {...this.state.logBody}
         if (this.state.lang == 12){
@@ -137,7 +136,8 @@ export default class Landing extends React.Component {
           hostname: '',
           message: ''
       },
-      showDeleteModal: false 
+      showDeleteModal: false,
+      selectValue: {label: 'Saved Logs'}
       });
     }
 
@@ -218,10 +218,11 @@ export default class Landing extends React.Component {
                     onChange={(option) => {
                       this.setState({
                         logBody: JSON.parse(localStorage.getItem(option.value)),
-                        logName: option.label
+                        logName: option.label,
+                        selectValue: {label: option.label}
                       })
                     }}
-                    defaultValue={{ label: "Saved Logs" }}
+                    value={this.state.selectValue}
                     options = {optionTest}
                     styles={{
                       control: (provided) => ({
