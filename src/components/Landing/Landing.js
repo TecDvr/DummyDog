@@ -17,18 +17,27 @@ export default withRouter(class RealLanding extends React.Component {
                     <p>info sent the right way</p>
                 </header>
                 <div className='title-button-cluster'>
-                    <Link
-                        style={{ textDecoration: 'none' }}
-                        to='/landing'><button>Logs</button>
-                    </Link>
-                    <Link
-                        style={{ textDecoration: 'none' }}
-                        to='/metric'><button>Metrics</button>
-                    </Link>
-                    <Link
-                        style={{ textDecoration: 'none' }}
-                        to='/event'><button>Events</button>
-                    </Link>
+                    <div>
+                        <Link
+                            style={{ textDecoration: 'none' }}
+                            to='/landing'><button>Logs</button>
+                        </Link>
+                        <Link
+                            style={{ textDecoration: 'none' }}
+                            to='/metric'><button>Metrics</button>
+                        </Link>
+                    </div>
+                    <div>
+                        <Link
+                            style={{ textDecoration: 'none' }}
+                            to='/event'><button>Events</button>
+                        </Link>
+                        <Link
+                            style={{ textDecoration: 'none' }}
+                            to='/trace'><button>Traces</button>
+                        </Link> 
+                    </div>
+                    
                 </div>
             </div>
         )

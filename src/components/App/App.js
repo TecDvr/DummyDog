@@ -4,17 +4,11 @@ import { Route } from 'react-router-dom';
 import Log from '../Log/Log';
 import Landing from '../Landing/Landing';
 import Metric from '../Metric/Metric';
-// import config from '../../config';
+import Trace from '../Trace/Trace';
 import DummydogContext from '../../context/dummydog-context';
 import Event from '../Event/Event';
 
 export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    }
-  }
-
   render() {
     return (
       <DummydogContext.Provider value={this.state}>
@@ -42,6 +36,12 @@ export default class App extends React.Component {
               exact
               path='/event'
               component={Event}>
+            </Route>
+
+            <Route
+              exact
+              path='/trace'
+              component={Trace}>
             </Route>
 
         </div>
