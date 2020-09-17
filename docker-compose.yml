@@ -1,0 +1,10 @@
+version: "3"
+services:
+  reactdog:
+    image: dummydog:1.1
+    container_name: reactdog
+    ports:
+      - "3000:3000"
+    restart: on-failure
+    tty: true
+    stdin_open: true

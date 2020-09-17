@@ -51,6 +51,7 @@ export default class Event extends React.Component {
     
     render() {
         let loading = this.state.loading;
+        let time = Math.round((new Date()).getTime() / 1000);
         return (
             <div className="landing-container">
                 <div className="title">
@@ -180,13 +181,13 @@ export default class Event extends React.Component {
                         }}
                         defaultValue={{ label: "Date of Event" }}
                         options={[
-                            { label: "Today", value: Date.now() },
-                            { label: "1 day ago", value: Date.now()-86400000 },
-                            { label: "2 day ago", value: Date.now()-(86400000*2) },
-                            { label: "3 day ago", value: Date.now()-(86400000*3) },
-                            { label: "4 day ago", value: Date.now()-(86400000*4) },
-                            { label: "5 day ago", value: Date.now()-(86400000*5) },
-                            { label: "6 day ago", value: Date.now()-(86400000*6) },
+                            { label: "Today", value: time },
+                            { label: "1 day ago", value: time-86400 },
+                            { label: "2 day ago", value: time-(86400*2) },
+                            { label: "3 day ago", value: time-(86400*3) },
+                            { label: "4 day ago", value: time-(86400*4) },
+                            { label: "5 day ago", value: time-(86400*5) },
+                            { label: "6 day ago", value: time-(86400*6) },
                         ]}
                         styles={{
                         control: (provided) => ({
