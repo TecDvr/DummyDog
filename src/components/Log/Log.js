@@ -5,6 +5,7 @@ import DummydogContext from '../../context/dummydog-context'
 import config from '../../config';
 import Select from 'react-select'
 import './Log.css'
+import dummyData from '../../dummy-data/dummy-data';
 
 export default class Landing extends React.Component {
     static contextType = DummydogContext;
@@ -17,7 +18,7 @@ export default class Landing extends React.Component {
             api: null,
             error: null,
             lang: 0,
-            template: [],
+            template: dummyData,
             logName: '',
             allGood: false,
             saved: false,
@@ -41,17 +42,7 @@ export default class Landing extends React.Component {
     }
     
     componentDidMount() {
-        //ReactModal.setAppElement('#main');
         ReactModal.setAppElement('body');
-        fetch(`${config.TEMPLATE_ENDPOINT}`, {
-            method: 'GET'
-        })
-        .then(res => res.json())
-        .then(resJSON => {
-            this.setState({
-                template: resJSON
-            })
-        })  
     }
 
     handleOpenModal () {
