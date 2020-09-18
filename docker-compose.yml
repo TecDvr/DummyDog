@@ -1,7 +1,7 @@
 version: "3"
 services:
   reactdog:
-    image: dummydog:1.1
+    image: zachgw/dummydog:1.1
     container_name: reactdog
     ports:
       - "3000:3000"

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import DummydogContext from '../../context/dummydog-context';
+import './Landing.css';
 
 export default withRouter(class RealLanding extends React.Component {
     static contextType = DummydogContext;
@@ -15,10 +16,10 @@ export default withRouter(class RealLanding extends React.Component {
         return (
                 <div className='landing-container'>
                     <header className='title'>
-                        <h1><i className="fas fa-dumpster-fire"></i> Dummydog</h1>
-                        <p>info sent the right way</p>
+                        <h1 className='title-main'><i className="fas fa-dumpster-fire"></i> Dummydog</h1>
+                        <p className='title-catch'>dummy info, sent the easy way</p>
                     </header>
-                    <form>
+                    <form className='landing-api-input'>
                         <label className="api-input-label" htmlFor="apikey">
                             Your API Key <i className="fas fa-key"></i>
                         </label>

@@ -7,7 +7,7 @@ export default class Trace extends React.Component {
     
     render() {
         return (
-            <div>
+            <div className="landing-container">
                 <p>Traces Coming Soon!</p>
                 <Link
                     style={{ textDecoration: 'none' }}

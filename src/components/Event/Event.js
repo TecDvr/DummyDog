@@ -215,7 +215,6 @@ export default class Event extends React.Component {
                         Title <i className="fas fa-file-signature"></i>
                     </label>
                     <input
-                        value={this.state.eventBody.hostname}
                         className="hostname-input"
                         required
                         placeholder="My Event"
@@ -232,7 +231,6 @@ export default class Event extends React.Component {
                     Aggregation Key <i className="fas fa-map-pin"></i>
                     </label>
                     <input
-                        value={this.state.eventBody.ddsource}
                         className="aggregation_key-input"
                         placeholder="Events using this key are grouped together in the Event Stream"
                         type="text"
@@ -248,7 +246,6 @@ export default class Event extends React.Component {
                         Device Name <i className="fas fa-file-signature"></i>
                     </label>
                     <input
-                        value={this.state.eventBody.hostname}
                         className="hostname-input"
                         required
                         placeholder="Macbook Pro"
@@ -265,7 +262,6 @@ export default class Event extends React.Component {
                         Host <i className="fas fa-file-signature"></i>
                     </label>
                     <input
-                        value={this.state.eventBody.hostname}
                         className="hostname-input"
                         required
                         placeholder="localhost"
@@ -282,7 +278,6 @@ export default class Event extends React.Component {
                         Tags <i className="fas fa-file-signature"></i>
                     </label>
                     <input
-                        value={this.state.eventBody.hostname}
                         className="hostname-input"
                         required
                         placeholder="key:value"
@@ -299,7 +294,6 @@ export default class Event extends React.Component {
                         Event Text <i className="fas fa-envelope-open-text"></i>
                     </label>
                     <textarea
-                        value={this.state.eventBody.message}
                         className="message-input"
                         required
                         placeholder="Kubernetes exploded today"
