@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactModal from 'react-modal';
 import { Link } from 'react-router-dom';
-import DummydogContext from '../../context/dummydog-context'
+import DummydogContext from '../../context/dummydog-context';
 import config from '../../config';
-import Select from 'react-select'
-import './Log.css'
+import Select from 'react-select';
+import './Log.css';
 import dummyData from '../../dummy-data/dummy-data';
 
 export default class Landing extends React.Component {
@@ -15,7 +15,6 @@ export default class Landing extends React.Component {
             showModal: false,
             showDeleteModal: false,
             loading: false,
-            api: null,
             error: null,
             lang: 0,
             template: dummyData,
@@ -68,7 +67,7 @@ export default class Landing extends React.Component {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'DD-API-KEY': `${this.state.api}`,
+                'DD-API-KEY': `${this.context.api}`,
             },
             body: JSON.stringify(this.state.logBody)
         })
@@ -237,18 +236,6 @@ export default class Landing extends React.Component {
                   />
                 </div>
                 <form className="api">
-                  <label className="api-input-label" htmlFor="apikey">
-                    Your API Key <i className="fas fa-key"></i>
-                  </label>
-                  <input
-                    className="api-input"
-                    required
-                    placeholder="Your API Key"
-                    type="text"
-                    name="apikey"
-                    id="apikey"
-                    onChange={(e) => this.setState({ api: e.target.value })}
-                  ></input>
                   <label className="source-input-label" htmlFor="source">
                     Log Source <i className="fas fa-map-pin"></i>
                   </label>
