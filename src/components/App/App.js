@@ -3,8 +3,6 @@ import './App.css';
 import { Route } from 'react-router-dom';
 import Log from '../Log/Log';
 import Landing from '../Landing/Landing';
-import Metric from '../Metric/Metric';
-import Trace from '../Trace/Trace';
 import Event from '../Event/Event';
 import DummydogContext from '../../context/dummydog-context';
 
@@ -37,20 +35,8 @@ export default class App extends React.Component {
 
           <Route
             exact
-            path='/metric'
-            component={Metric}>
-          </Route>
-
-          <Route
-            exact
             path='/event'
             component={Event}>
-          </Route>
-
-          <Route
-            exact 
-            path='/trace'
-            component={Trace}>
           </Route>
 
         </div>  
