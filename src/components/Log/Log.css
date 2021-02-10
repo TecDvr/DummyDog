@@ -47,7 +47,7 @@ button {
     width: 150px;
     border: solid white 1px;
     border-radius: 10px;
-    background: rgba(255, 255, 255, .2);
+    background: rgba(255, 255, 255, 0.2);
     margin: 10px;
     cursor: pointer;
 }
@@ -60,12 +60,12 @@ button {
 
 .save-modal {
     color: white;
-    font-family: 'Orbitron', sans-serif;
+    font-family: "Orbitron", sans-serif;
     padding: 2em;
-    background: #2356D7;
-    background: -webkit-linear-gradient(top left, #2356D7, #B60CC3);
-    background: -moz-linear-gradient(top left, #2356D7, #B60CC3);
-    background: linear-gradient(to bottom right, #2356D7, #B60CC3);
+    background: #2356d7;
+    background: -webkit-linear-gradient(top left, #2356d7, #b60cc3);
+    background: -moz-linear-gradient(top left, #2356d7, #b60cc3);
+    background: linear-gradient(to bottom right, #2356d7, #b60cc3);
     position: absolute;
     left: 50%;
     top: 50%;
@@ -92,3 +92,15 @@ button {
     display: flex;
 }
 
+.currentAPI {
+    width: 100vw;
+    margin-left: 40px;
+    font-weight: bold;
+}
+
+.currentAPItext {
+    background: rgb(255, 255, 255, 0.2);
+    padding: 8px;
+    border-radius: 10px;
+    width: 135px;
+}

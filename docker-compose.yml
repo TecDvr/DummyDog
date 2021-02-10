@@ -1,8 +1,8 @@
 version: "3"
 services:
-    reactdog:
+    dummydog:
         image: zachgw/dummydog:latest
-        container_name: reactdog
+        container_name: dummydog
         ports:
             - "3000:3000"
         restart: on-failure

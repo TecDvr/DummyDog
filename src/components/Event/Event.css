@@ -1,0 +1,12 @@
+.currentAPI {
+    width: 100vw;
+    margin-left: 40px;
+    font-weight: bold;
+}
+
+.currentAPItext {
+    background: rgb(255, 255, 255, 0.2);
+    padding: 8px;
+    border-radius: 10px;
+    width: 135px;
+}
