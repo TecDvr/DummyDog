@@ -1,9 +1,8 @@
 import React from "react";
 import DummydogContext from "../../context/dummydog-context";
 import { Link } from "react-router-dom";
-import config from "../../config";
 import Select from "react-select";
-import "./Event.css";
+// import "./Event.css";
 
 export default class Event extends React.Component {
     static contextType = DummydogContext;
@@ -58,9 +57,11 @@ export default class Event extends React.Component {
         let time = Math.round(new Date().getTime() / 1000);
         return (
             <div className='landing-container'>
-                <p className='currentAPItext'>
-                    api in use: {this.context.api.substr(28)}
-                </p>
+                <div className='currentAPI'>
+                        <p className='currentAPItext'>
+                            api in use: {this.context.api.substr(28)}
+                        </p>
+                    </div>
                 <div className='title'>
                     <h1>
                         <i className='fas fa-shipping-fast'></i> Send Some

@@ -2,7 +2,6 @@ import React from "react";
 import ReactModal from "react-modal";
 import { Link } from "react-router-dom";
 import DummydogContext from "../../context/dummydog-context";
-// import config from "../../config";
 import Select from "react-select";
 import "./Log.css";
 import dummyData from "../../dummy-data/dummy-data";
@@ -14,6 +13,7 @@ export default class Landing extends React.Component {
         this.state = {
             showModal: false,
             showDeleteModal: false,
+            showErrorModal: false,
             loading: false,
             error: null,
             lang: 0,
@@ -38,6 +38,7 @@ export default class Landing extends React.Component {
         this.handleLogSend = this.handleLogSend.bind(this);
         this.saveFormat = this.saveFormat.bind(this);
         this.removeLog = this.removeLog.bind(this);
+        this.errorClose = this.errorClose.bind(this);
     }
 
     componentDidMount() {
@@ -60,6 +61,18 @@ export default class Landing extends React.Component {
         this.setState({ showDeleteModal: false });
     }
 
+    errorMethod() {
+        this.setState({
+            loading: false,
+            showErrorModal: true
+        });
+        // alert(`Uh oh! Looks like something went wrong and you got a ${res.status} error`);
+    }
+
+    errorClose() {
+        this.setState({ showErrorModal: false })
+    }
+
     handleLogSend(e) {
         console.log(JSON.stringify(this.state.logBody))
         this.setState({ loading: true });
@@ -73,20 +86,12 @@ export default class Landing extends React.Component {
             body: JSON.stringify(this.state.logBody),
         })
             .then((res) =>
-            res.ok
-                ? res.json().then((allGood) => {
-                      console.log(allGood);
-                      this.setState({ allGood: true });
-                      this.setState({ loading: false });
-                  })
-                : res
-                      .json()
-                      .then((resJson) =>
-                          this.setState(
-                              { error: resJson.error },
-                              console.log(this.state.error)
-                          )
-                      )
+                res.ok
+                    ? res.json().then((allGood) => {
+                        this.setState({ allGood: true });
+                        this.setState({ loading: false });
+                    })
+                    : this.errorMethod()
         );
     }
 
@@ -371,6 +376,19 @@ export default class Landing extends React.Component {
                             </button>
                             <button onClick={this.removeLog} type='button'>
                                 Delete
+                            </button>
+                        </div>
+                    </ReactModal>
+                    <ReactModal
+                        className='save-modal'
+                        isOpen={this.state.showErrorModal}
+                    >
+                        <div>
+                            <p>Uh oh! Looks like something went wrong!</p>
+                        </div>
+                        <div className='save-button-cluster'>
+                            <button onClick={this.errorClose}>
+                                Ok
                             </button>
                         </div>
                     </ReactModal>
