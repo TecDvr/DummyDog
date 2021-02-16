@@ -74,7 +74,6 @@ export default class Landing extends React.Component {
     }
 
     handleLogSend(e) {
-        console.log(JSON.stringify(this.state.logBody))
         this.setState({ loading: true });
         e.preventDefault();
         fetch(`/input`, {

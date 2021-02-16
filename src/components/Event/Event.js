@@ -1,8 +1,8 @@
 import React from "react";
+import ReactModal from "react-modal";
 import DummydogContext from "../../context/dummydog-context";
 import { Link } from "react-router-dom";
 import Select from "react-select";
-// import "./Event.css";
 
 export default class Event extends React.Component {
     static contextType = DummydogContext;
@@ -11,6 +11,8 @@ export default class Event extends React.Component {
         this.state = {
             allGood: false,
             loading: false,
+            eventURL: '',
+            showErrorModal: false,
             eventBody: {
                 aggregation_key: null,
                 alert_type: null,
@@ -25,6 +27,22 @@ export default class Event extends React.Component {
             },
         };
         this.handleLogEvent = this.handleLogEvent.bind(this);
+        this.errorClose = this.errorClose.bind(this);
+    }
+
+    componentDidMount() {
+        ReactModal.setAppElement("body");
+    }
+
+    errorMethod() {
+        this.setState({
+            loading: false,
+            showErrorModal: true
+        });
+    }
+
+    errorClose() {
+        this.setState({ showErrorModal: false })
     }
 
     handleLogEvent(e) {
@@ -40,15 +58,11 @@ export default class Event extends React.Component {
         }).then((res) =>
             res.ok
                 ? res.json().then((allGood) => {
-                      console.log(allGood);
-                      this.setState({ allGood: true });
-                      this.setState({ loading: false });
+                    this.setState({ eventURL: allGood.event.url });
+                    this.setState({ allGood: true });
+                    this.setState({ loading: false });
                   })
-                : res
-                      .json()
-                      .then((resJson) =>
-                          this.setState({ error: resJson.error })
-                      )
+                : this.errorMethod()
         );
     }
 
@@ -70,7 +84,7 @@ export default class Event extends React.Component {
                     {this.state.allGood === false ? (
                         <p>Ready When You Are</p>
                     ) : (
-                        <p>Events Sent!</p>
+                            <p>Event Sent! View this event <a href={this.state.eventURL}>HERE</a></p>
                     )}
                 </div>
                 <div className='log-selector'>
@@ -325,6 +339,19 @@ export default class Event extends React.Component {
                         }}
                     ></textarea>
                 </form>
+                <ReactModal
+                        className='save-modal'
+                        isOpen={this.state.showErrorModal}
+                    >
+                        <div>
+                            <p>Uh oh! Looks like something went wrong!</p>
+                        </div>
+                        <div className='save-button-cluster'>
+                            <button onClick={this.errorClose}>
+                                Ok
+                            </button>
+                        </div>
+                    </ReactModal>
                 <div className='button-cluster'>
                     <button onClick={this.handleLogEvent} disabled={loading}>
                         {loading ? (
