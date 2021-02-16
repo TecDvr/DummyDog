@@ -1,7 +1,7 @@
 version: "3"
 services:
     dummydog:
-        image: zachgw/dummydog:latest
+        image: zachgw/dummydogfinal:latest
         container_name: dummydog
         ports:
             - "3000:3000"
